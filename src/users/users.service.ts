@@ -11,8 +11,12 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = await this.userModel.create(createUserDto);
+    await user.save();
+
+    delete user.password;
+    return user;
   }
 
   async findAll(): Promise<User[]> {
