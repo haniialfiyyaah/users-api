@@ -15,6 +15,8 @@ import { UsersModule } from './users/users.module';
       password: '',
       database: 'db_users',
       models: [User],
+      autoLoadModels: true,
+      synchronize: true,
     }),
     UsersModule,
   ],
