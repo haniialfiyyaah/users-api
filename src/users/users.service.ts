@@ -13,7 +13,6 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user = await this.userModel.create(createUserDto);
-    await user.save();
 
     delete user.password;
     return user;
@@ -39,8 +38,9 @@ export class UsersService {
     });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const user = this.userModel.update(updateUserDto, { where: { id } });
+    return user[1][0];
   }
 
   async remove(id: number): Promise<void> {
