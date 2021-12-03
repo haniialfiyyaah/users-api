@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MulterModule } from '@nestjs/platform-express';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -17,6 +18,9 @@ import { UsersModule } from './users/users.module';
       models: [User],
       autoLoadModels: true,
       synchronize: true,
+    }),
+    MulterModule.register({
+      dest: './files',
     }),
     UsersModule,
   ],

@@ -4,6 +4,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
+const BASE_URL = 'http://localhost:3000';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -11,7 +13,11 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(
+    createUserDto: CreateUserDto,
+    file: Express.Multer.File,
+  ): Promise<User> {
+    createUserDto['avatar'] = `${BASE_URL}/${file.path}`;
     const user = await this.userModel.create(createUserDto);
     const { password, ...result } = user['dataValues'];
     return result;
